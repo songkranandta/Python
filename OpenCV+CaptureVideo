@@ -1,0 +1,31 @@
+import cv2
+import calendar;
+import time
+
+ts = calendar.timegm(time.gmtime())
+cap = cv2.VideoCapture(0)
+#cap = cv2.VideoCapture('rtsp://192.168.1.192:8554/unicast')
+
+
+fourcc=cv2.VideoWriter_fourcc(*'XVID')
+
+
+#out=cv2.VideoWriter('Video_2.avi',fourcc,25.0,(int(cap.get(3)), int(cap.get(4))))
+out=cv2.VideoWriter('Video_'+str(ts)+'.avi',fourcc,25.0,(int(cap.get(3)), int(cap.get(4))))
+
+
+
+
+while(cap.isOpened()):
+    ret, frame = cap.read()
+    if(ret==True):
+        out.write(frame)
+        cv2.imshow('Camera_2',frame)
+        if(cv2.waitKey(1) & 0xFF == ord('q')):
+           break
+    else:
+        break
+
+
+cap.release()
+cv2.destroyAllWindows()
